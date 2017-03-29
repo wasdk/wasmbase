@@ -1,0 +1,3 @@
+node_modules/
+lib/wasmbase.wasm
+test/test.wasm

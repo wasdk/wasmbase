@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./node_modules/systemjs/dist/system.src.js"></script>
+</head>
+<body>
+  <script>
+    // Init SystemJS
+    SystemJS.config({
+      packages: {
+        '*.js': {
+          format: 'cjs',
+        }
+      },
+    });
+    Promise.all([System.import('./lib/wasmbase.js'), System.import('./test/test.js')]).
+      then(function (libs) {
+      // Wait for modules to load and instantiate wasm.
+      return Promise.all([libs[0].ready, libs[1].ready]).
+        then(function () { return libs; });
+    }).then(function (libs) {
+      function printMem(ptr, size) {
+        console.log('Ptr/Data: ', ptr, new Uint8Array(Memory.buffer, ptr, size));
+      }
+
+      var Memory = libs[0].Memory; var Test = libs[1].Test;
+
+      var p = Test.createAndFill(10, 2);
+      printMem(p, 10);
+      Test.destroy(p);
+
+      var p = Test.createAndFill(30, 3);
+      printMem(p, 30);
+      var p = Test.createAndFill(10, 5);
+      printMem(p, 10);
+    });
+  </script>
+</body></html>

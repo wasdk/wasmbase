@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+    },
+    "output": "wasmbase.wasm",
+    "files": [
+        "wasmbase.cpp"
+    ],
+    "options": {
+        "ALLOW_MEMORY_GROWTH": 1,
+        "RELOCATABLE": 0,
+        "SIDE_MODULE": 0,
+        "EXPORTED_RUNTIME_METHODS": [],
+        "EXPORTED_FUNCTIONS": [
+            "_malloc", "_free", 
+            "__Znwj", "__ZdlPv",
+            "_memcpy", "_memset",
+            "abort",
+            "___cxa_throw", "___cxa_allocate_exception"
+        ]
+
+    }
+}
