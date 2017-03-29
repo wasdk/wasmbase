@@ -14,24 +14,25 @@ function ptrOrNull(obj) {
   return obj === null ? NullPtr : obj._ptr;
 }
 function stackPush(size) {
-  return memory.malloc(size);
+  return _memory.malloc(size);
 }
 function stackPop(size, p) {
-  memory.free(p);
+  _memory.free(p);
 }
 
+var _module;
 exports.ready = wasmbase.ready.then(function () {
-  return wasmbase.getInstance(require.resolve('./test.wasm'), {
+  var path = require.resolve('./test.wasm');
+  return wasmbase.getInstance(path, {
     _registerObject: registerObject,
     _unregisterObject: unregisterObject,
     _invokeCallback: invokeCallback,
   });
 }).then(function (instance) {
   _module = instance;
-});
+})
 
-var memory = wasmbase.Memory;
-var _module;
+var _memory = wasmbase.Memory;
 var _callbacks = Object.create(null);
 var _objects = Object.create(null);
 const NullPtr = 0;
@@ -40,9 +41,9 @@ const NullPtr = 0;
 class Test {
   static get _typeid() { return 0; }
   static createAndFill(size, fill) {
+    var _data = new DataView(_memory.buffer, 0);
     var _stack = stackPush(4);
     var success = _module.exports.__ZN4Test4Test13createAndFillEjhPj(size, fill, _stack + 0);
-    var _data = new DataView(memory.buffer, 0);
     var result = _data.getUint32(_stack + 0, true);
     stackPop(4, _stack);
     if (!success)
