@@ -22,8 +22,9 @@ function stackPop(size, p) {
 
 var _module;
 exports.ready = wasmbase.ready.then(function () {
-  var path = require.resolve('./test.wasm');
-  return wasmbase.getInstance(path, {
+  return wasmbase.fetchModule('test.wasm', __dirname);
+}).then(function (module) {
+  return wasmbase.getInstance(module, {
     _registerObject: registerObject,
     _unregisterObject: unregisterObject,
     _invokeCallback: invokeCallback,

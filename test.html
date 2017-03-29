@@ -6,20 +6,9 @@
 </head>
 <body>
   <script>
-    // Init SystemJS
-    SystemJS.config({
-      packages: {
-        "": {
-          "format": "cjs",
-          "defaultExtension": false,
-        }
-      },
-    });
-    Promise.all([System.import('./lib/wasmbase.js'), System.import('./test/test.js')]).
-      then(function (libs) {
-      // Wait for modules to load and instantiate wasm.
-      return Promise.all([libs[0].ready, libs[1].ready]).
-        then(function () { return libs; });
+    Promise.all([System.import('./lib/wasmbase.js'), System.import('./test/test.js')])
+           .then(function (libs) {
+      return libs[0].waitForReady(libs);
     }).then(function (libs) {
       function printMem(ptr, size) {
         console.log('Ptr/Data: ', ptr, new Uint8Array(Memory.buffer, ptr, size));
