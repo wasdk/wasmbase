@@ -1,6 +1,6 @@
 {
   "name": "wasmbase",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Simple base library for WebAssembly powered modules.",
   "main": "./lib/wasmbase.js",
   "scripts": {
@@ -15,6 +15,6 @@
   },
   "devDependencies": {
     "systemjs": "^0.20.10",
-    "wasdk": "^1.0.46"
+    "wasdk": "^1.0.52"
   }
 }
