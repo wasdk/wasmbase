@@ -15,6 +15,12 @@
         "SIDE_MODULE": 0,
         "EXPORTED_RUNTIME_METHODS": [],
         "EXPORTED_FUNCTIONS": [
+           "__ZN8wasmbase9StringBox8get_sizeEv",
+           "__ZN8wasmbase9StringBox5resetERS0_",
+           "__ZN8wasmbase9StringBox5resetERS0_l",
+           "__ZN8wasmbase9StringBox11get_contentERKS0_PlPPKwS3_",
+           "__ZN8wasmbase9StringBox5clearERS0_",
+
            "abort",
             "_malloc",
             "_free",

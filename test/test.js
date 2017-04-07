@@ -56,6 +56,20 @@ class Test {
     if (!success)
       throw new Error("call Test destroy");
   }
+  static flip(s) {
+    var _data = new DataView(_memory.buffer, 0);
+    var _stack = stackPush(wasmbase.StringBox.size * 2);
+    wasmbase.StringBox.init(_stack, s);
+    wasmbase.StringBox.init(_stack + wasmbase.StringBox.size);
+    var success = _module.exports.__ZN4Test4Test4flipERKN8wasmbase9StringBoxEPS2_(_stack, _stack + wasmbase.StringBox.size);
+    var result = wasmbase.StringBox.get(_stack + wasmbase.StringBox.size);
+    wasmbase.StringBox.destroy(_stack + wasmbase.StringBox.size);
+    wasmbase.StringBox.destroy(_stack);
+    stackPop(wasmbase.StringBox.size * 2, _stack);
+    if (!success)
+      throw new Error("call Test flip");
+    return result;
+  }
 }
 exports.Test = Test;
 function lookupObject_Test(p) {
